@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import { connectDB } from "./db/bloodDB.js";
+import authRoutes from "./routes/authentication.js";
 
 dotenv.config();
 
@@ -17,6 +18,9 @@ app.use(express.json());
 app.get("/", async (req, res) => {
     res.send("Blood Buddy Server is Running!");
 });
+
+// routes
+app.use('/auth', authRoutes);
 
 // error handler for 404
 app.use((req, res, next) => {
