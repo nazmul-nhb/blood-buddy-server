@@ -14,9 +14,5 @@ router.get('/', async (req, res) => {
     }
 });
 
-router.get('/test', async (req, res) => {
-    res.status(200).send({ success: true, message: "Hello! It's Working!" })
-})
-
 
 export default router;
