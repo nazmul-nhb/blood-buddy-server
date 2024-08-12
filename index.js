@@ -11,8 +11,7 @@ const app = express();
 const port = process.env.PORT || 5000;
 
 // middlewares
-// TODO: Add corsOptions later
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json());
 
 // home route
