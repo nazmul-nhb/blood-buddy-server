@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import { connectDB } from "./db/bloodDB.js";
 import { corsOptions } from "./configs/corsConfig.js";
 import authRoutes from "./routes/authentication.js";
+import userRoutes from "./routes/users.js";
 
 dotenv.config();
 
@@ -24,6 +25,7 @@ app.get("/", async (req, res) => {
 
 // routes
 app.use('/auth', authRoutes);
+app.use('/users', userRoutes);
 
 // error handler for 404
 app.use((req, res, next) => {
