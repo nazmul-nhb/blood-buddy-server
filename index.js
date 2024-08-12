@@ -52,7 +52,7 @@ const port = process.env.PORT || 5000;
         });
 
     } catch (error) {
-        console.error("Failed to Connect to DB: ", error);
+        console.error("Failed to Start the Server: ", error);
         process.exit(1);
     }
 })();
