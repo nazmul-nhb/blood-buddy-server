@@ -11,41 +11,48 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT || 5000;
 
-// app.options("", cors(corsOptions));
+(async () => {
+    try {
+        // connect to the DB
+        await connectDB();
 
-// middlewares
-// TODO: Add corsOptions later
-app.use(cors());
-app.use(express.json());
+        // middlewares
+        // TODO: Add corsOptions later
+        app.use(cors());
+        app.use(express.json());
 
-// home route
-app.get("/", async (req, res) => {
-    res.send("Blood Buddy Server is Running!");
-});
+        // home route
+        app.get("/", async (req, res) => {
+            res.send("Blood Buddy Server is Running!");
+        });
 
-// routes
-app.use('/auth', authRoutes);
-app.use('/users', userRoutes);
+        // routes
+        app.use('/auth', authRoutes);
+        app.use('/users', userRoutes);
 
-// error handler for 404
-app.use((req, res, next) => {
-    const error = new Error("Requested URL Not Found!");
-    error.status = 404;
-    next(error);
-});
+        // error handler for 404
+        app.use((req, res, next) => {
+            const error = new Error("Requested URL Not Found!");
+            error.status = 404;
+            next(error);
+        });
 
-// final error handler
-app.use((error, req, res, next) => {
-    console.error(error);
-    res.status(error.status || 500).send({
-        success: false,
-        message: error.message || "Internal Server Error!",
-    });
-});
+        // final error handler
+        app.use((error, req, res, next) => {
+            console.error(error);
+            res.status(error.status || 500).send({
+                success: false,
+                message: error.message || "Internal Server Error!",
+            });
+        });
 
-// run the server
-app.listen(port, async () => {
-    await connectDB();
+        // run the server
+        app.listen(port, () => {
+            console.log(`Blood Buddy is Running on Port: ${port}`);
+        });
 
-    console.log(`Blood Buddy is Running on Port: ${port}`);
-});
+    } catch (error) {
+        console.error("Failed to Connect to DB: ", error);
+        process.exit(1); // Exit the process with an error code
+    }
+})();
