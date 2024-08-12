@@ -6,6 +6,11 @@ dotenv.config();
 const mongoURI = process.env.MONGO_STRING;
 
 export const connectDB = async () => {
+    if (!mongoURI) {
+        console.error("Provide A MongoDB Connection String!");
+        return;
+    }
+
     try {
         await mongoose.connect(mongoURI);
         
@@ -13,10 +18,11 @@ export const connectDB = async () => {
     } catch (error) {
         console.log("DB is Not Connected!");
         if (error instanceof Error) {
-            console.error(error.message);
+            console.error(`DB Error: ${error.message}`);
         } else {
             console.error("An Unknown Error Occurred!");
         }
+
         // process.exit(1);
     }
 };
